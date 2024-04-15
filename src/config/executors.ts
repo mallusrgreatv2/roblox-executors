@@ -19,7 +19,7 @@ export enum Status {
   WORKING = "working",
 }
 export const StatusReadable = (status: Status) =>
-  status === Status.PATCHED ? "❌ Patched" : "✅ Working";
+  status === Status.PATCHED ? "✖️ Patched" : "✅ Working";
 
 export enum Price {
   FREE = "free",
