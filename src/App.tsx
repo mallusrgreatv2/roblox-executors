@@ -29,32 +29,36 @@ export default function App() {
   const [price, setPrice] = useQueryParam("price", stringParam);
 
   return (
-    <main>
+    <main className="bg-[#181a1b] text-white">
       <div className="bg-sky-400 p-10 text-center">
         <h1 className="text-3xl font-bold">Roblox Executors List</h1>
       </div>
       <div className="flex justify-center p-10 pb-0">
         <Select onValueChange={setOS} value={os}>
-          <SelectTrigger className="mx-3 w-[180px]">
+          <SelectTrigger className="mx-3 w-[180px] bg-[#181a1b]">
             <SelectValue placeholder="Select an OS" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[#181a1b] text-white">
             <SelectGroup>
               <SelectLabel>OSes</SelectLabel>
               <SelectItem value="all">All OSes</SelectItem>
               {Object.values(Platform).map((v) => (
                 <SelectItem key={v} value={v}>
-                  {PlatformReadable(v)}
+                  <PlatformText
+                    platform={v}
+                    width={24}
+                    height={24}
+                  ></PlatformText>
                 </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
         </Select>
         <Select onValueChange={setStatus} value={status}>
-          <SelectTrigger className="mx-3 w-[180px]">
-            <SelectValue className="" placeholder="Select a status" />
+          <SelectTrigger className="mx-3 w-[180px] bg-[#181a1b]">
+            <SelectValue placeholder="Select a status" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[#181a1b] text-white">
             <SelectGroup>
               <SelectLabel>Statuses</SelectLabel>
               <SelectItem value="all">All Statuses</SelectItem>
@@ -67,10 +71,10 @@ export default function App() {
           </SelectContent>
         </Select>
         <Select onValueChange={setKey} value={key}>
-          <SelectTrigger className="mx-3 w-[180px]">
+          <SelectTrigger className="mx-3 w-[180px] bg-[#181a1b]">
             <SelectValue placeholder="Select a key type" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[#181a1b] text-white">
             <SelectGroup>
               <SelectLabel>Key Types</SelectLabel>
               <SelectItem value="all">All Key Types</SelectItem>
@@ -83,10 +87,10 @@ export default function App() {
           </SelectContent>
         </Select>
         <Select onValueChange={setPrice} value={price}>
-          <SelectTrigger className="mx-3 w-[180px]">
-            <SelectValue className="" placeholder="Select a price type" />
+          <SelectTrigger className="mx-3 w-[180px] bg-[#181a1b]">
+            <SelectValue placeholder="Select a price type" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[#181a1b] text-white">
             <SelectGroup>
               <SelectLabel>Price Types</SelectLabel>
               <SelectItem value="all">All Price Types</SelectItem>
@@ -116,8 +120,8 @@ export default function App() {
               className={cn(
                 "m-5 flex flex-col rounded-lg px-10 py-5",
                 executor.status === Status.PATCHED
-                  ? "bg-red-600"
-                  : "bg-green-400",
+                  ? "bg-red-500"
+                  : "bg-green-600",
               )}
             >
               <div className="flex items-center">
@@ -183,7 +187,7 @@ function Field({
       {link && typeof children === "string" ? (
         <a
           href={children}
-          className="text-sky-800 transition-colors hover:text-sky-900"
+          className="text-sky-300 transition-colors hover:text-sky-400"
           target="_blank"
         >
           {children}
@@ -196,12 +200,24 @@ function Field({
     </div>
   );
 }
-function PlatformText({ platform }: { platform: Platform }) {
+function PlatformText({
+  platform,
+  width = 32,
+  height = 32,
+  className = "",
+}: {
+  platform: Platform;
+  width?: number;
+  height?: number;
+  className?: string;
+}) {
   return (
     <div className="flex p-1 pl-0">
       <PlatformIcon
         platform={platform}
-        className="rounded-full bg-slate-300 p-1"
+        className={cn("rounded-full bg-slate-300 p-1", className)}
+        width={width}
+        height={height}
       />
       <p className="p-1">{PlatformReadable(platform)}</p>
     </div>
