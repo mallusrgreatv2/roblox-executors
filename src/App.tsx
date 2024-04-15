@@ -1,4 +1,14 @@
-import { Key, Platform, Status, executors } from "./config/executors";
+import {
+  Key,
+  KeyReadable,
+  Platform,
+  PlatformReadable,
+  Price,
+  PriceReadable,
+  Status,
+  StatusReadable,
+  executors,
+} from "./config/executors";
 import { cn } from "./lib/utils";
 import {
   Select,
@@ -16,6 +26,7 @@ export default function App() {
   const [os, setOS] = useQueryParam("os", stringParam);
   const [status, setStatus] = useQueryParam("status", stringParam);
   const [key, setKey] = useQueryParam("key", stringParam);
+  const [price, setPrice] = useQueryParam("price", stringParam);
 
   return (
     <main>
@@ -23,49 +34,65 @@ export default function App() {
         <h1 className="text-3xl font-bold">Roblox Executors List</h1>
       </div>
       <div className="flex justify-center p-10 pb-0">
-        <Select onValueChange={setOS}>
+        <Select onValueChange={setOS} value={os}>
           <SelectTrigger className="mx-3 w-[180px]">
             <SelectValue placeholder="Select an OS" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               <SelectLabel>OSes</SelectLabel>
-              <SelectItem value={"all"}>All</SelectItem>
+              <SelectItem value="all">All OSes</SelectItem>
               {Object.values(Platform).map((v) => (
                 <SelectItem key={v} value={v}>
-                  {v}
+                  {PlatformReadable(v)}
                 </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Select onValueChange={setStatus}>
+        <Select onValueChange={setStatus} value={status}>
           <SelectTrigger className="mx-3 w-[180px]">
             <SelectValue className="" placeholder="Select a status" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Statuses</SelectLabel>
-              <SelectItem value={"all"}>All</SelectItem>
+              <SelectItem value="all">All Statuses</SelectItem>
               {Object.values(Status).map((v) => (
                 <SelectItem key={v} value={v}>
-                  {v}
+                  {StatusReadable(v)}
                 </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Select onValueChange={setKey}>
+        <Select onValueChange={setKey} value={key}>
           <SelectTrigger className="mx-3 w-[180px]">
-            <SelectValue className="" placeholder="Select a key type" />
+            <SelectValue placeholder="Select a key type" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Key types</SelectLabel>
-              <SelectItem value={"all"}>All</SelectItem>
+              <SelectLabel>Key Types</SelectLabel>
+              <SelectItem value="all">All Key Types</SelectItem>
               {Object.values(Key).map((v) => (
                 <SelectItem key={v} value={v}>
-                  {v}
+                  {KeyReadable(v)}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select onValueChange={setPrice} value={price}>
+          <SelectTrigger className="mx-3 w-[180px]">
+            <SelectValue className="" placeholder="Select a price type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Price Types</SelectLabel>
+              <SelectItem value="all">All Price Types</SelectItem>
+              {Object.values(Price).map((v) => (
+                <SelectItem key={v} value={v}>
+                  {PriceReadable(v)}
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -81,6 +108,7 @@ export default function App() {
             !status || status !== "all" ? v.status === status : true,
           )
           .filter((v) => (!key || key !== "all" ? v.key === key : true))
+          .filter((v) => (!price || price !== "all" ? v.price === price : true))
           .sort((a, b) => a.name.charCodeAt(0) - b.name.charCodeAt(0))
           .map((executor) => (
             <div
@@ -108,8 +136,9 @@ export default function App() {
                   ))}
                 </div>
               </Field>
-              <Field name="Status:">{executor.status}</Field>
-              <Field name="Key:">{executor.key}</Field>
+              <Field name="Status:">{StatusReadable(executor.status)}</Field>
+              <Field name="Key:">{KeyReadable(executor.key)}</Field>
+              <Field name="Price:">{PriceReadable(executor.price)}</Field>
               {executor.website ? (
                 <Field name="Website:" link>
                   {executor.website}
@@ -127,7 +156,7 @@ export default function App() {
             </div>
           ))}
       </div>
-      <footer className="flex justify-center bg-sky-600 p-10">
+      <footer className="absolute w-full bg-sky-600 p-10 text-center">
         Made by{" "}
         <a
           href="https://discopika.tk"
@@ -174,7 +203,7 @@ function PlatformText({ platform }: { platform: Platform }) {
         platform={platform}
         className="rounded-full bg-slate-300 p-1"
       />
-      <p className="p-1">{platform}</p>
+      <p className="p-1">{PlatformReadable(platform)}</p>
     </div>
   );
 }

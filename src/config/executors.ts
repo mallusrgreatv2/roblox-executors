@@ -1,21 +1,48 @@
 export enum Platform {
-  WINDOWS = "Windows",
-  ANDROID = "Android",
-  IOS = "iOS",
+  WINDOWS = "windows",
+  ANDROID = "android",
+  IOS = "ios",
+}
+export function PlatformReadable(platform: Platform) {
+  switch (platform) {
+    case Platform.ANDROID:
+      return "Android";
+    case Platform.IOS:
+      return "iOS";
+    case Platform.WINDOWS:
+    default:
+      return "Windows";
+  }
 }
 export enum Status {
-  PATCHED = "❌ Patched",
-  WORKING = "✅ Working",
+  PATCHED = "patched",
+  WORKING = "working",
 }
+export const StatusReadable = (status: Status) =>
+  status === Status.PATCHED ? "❌ Patched" : "✅ Working";
+
 export enum Price {
-  FREE = "🆓 Free",
-  PAID = "💵 Paid",
-  FREEMIUM = "☯️ Freemium",
+  FREE = "free",
+  PAID = "paid",
+  FREEMIUM = "freemium",
+}
+export function PriceReadable(price: Price) {
+  switch (price) {
+    case Price.PAID:
+      return "💵 Paid";
+    case "freemium":
+      return "☯️ Freemium";
+    case Price.FREE:
+    default:
+      return "🆓 Free";
+  }
 }
 export enum Key {
-  NOKEY = "🔓 No Key",
-  KEY = "🔐 Keylocked",
+  NOKEY = "nokey",
+  KEY = "keylocked",
 }
+export const KeyReadable = (key: Key) =>
+  key === Key.NOKEY ? "🔓 No Key" : "🔐 Keylocked";
 export const executors: {
   name: string;
   platforms: Platform[];
@@ -50,7 +77,7 @@ export const executors: {
     name: "Codex",
     platforms: [Platform.ANDROID, Platform.IOS],
     status: Status.WORKING,
-    price: Price.FREEMIUM,
+    price: Price.FREE,
     key: Key.KEY,
     website: "https://codex.lol/",
     discord: "https://discord.gg/robloxexploits",
