@@ -78,10 +78,12 @@ export default function App() {
       <div className="flex flex-col p-4">
         {executors
           .filter((v) =>
-            os !== "all" ? v.platforms.includes(os as Platform) : true,
+            !os || os !== "all" ? v.platforms.includes(os as Platform) : true,
           )
-          .filter((v) => (status !== "all" ? v.status === status : true))
-          .filter((v) => (key !== "all" ? v.key === key : true))
+          .filter((v) =>
+            !status || status !== "all" ? v.status === status : true,
+          )
+          .filter((v) => (!key || key !== "all" ? v.key === key : true))
           .sort((a, b) => a.name.charCodeAt(0) - b.name.charCodeAt(0))
           .map((executor) => (
             <div
