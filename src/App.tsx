@@ -9,16 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/select";
-import { StringParam, useQueryParam } from "use-query-params";
+import { StringParam, useQueryParam, withDefault } from "use-query-params";
 
 export default function App() {
-  const [os, setOS] = useQueryParam("os", StringParam);
-  const [status, setStatus] = useQueryParam("status", StringParam);
-  const [key, setKey] = useQueryParam("key", StringParam);
-
-  if (!os) setOS("all");
-  if (!status) setStatus("all");
-  if (!key) setKey("all");
+  const stringParam = withDefault(StringParam, "all");
+  const [os, setOS] = useQueryParam("os", stringParam);
+  const [status, setStatus] = useQueryParam("status", stringParam);
+  const [key, setKey] = useQueryParam("key", stringParam);
 
   return (
     <main>
