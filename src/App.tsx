@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Key, Platform, Status, executors } from "./config/executors";
 import { cn } from "./lib/utils";
 import {
@@ -10,10 +9,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/select";
+import { StringParam, useQueryParam } from "use-query-params";
+
 export default function App() {
-  const [os, setOS] = useState<string>("none");
-  const [status, setStatus] = useState<string>("none");
-  const [key, setKey] = useState<string>("none");
+  const [os, setOS] = useQueryParam("os", StringParam);
+  const [status, setStatus] = useQueryParam("status", StringParam);
+  const [key, setKey] = useQueryParam("key", StringParam);
+
+  if (!os) setOS("all");
+  if (!status) setStatus("all");
+  if (!key) setKey("all");
+
   return (
     <main>
       <div className="bg-sky-400 p-10 text-center">
@@ -27,9 +33,11 @@ export default function App() {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>OSes</SelectLabel>
-              <SelectItem value={"none"}>All</SelectItem>
+              <SelectItem value={"all"}>All</SelectItem>
               {Object.values(Platform).map((v) => (
-                <SelectItem value={v}>{v}</SelectItem>
+                <SelectItem key={v} value={v}>
+                  {v}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
@@ -41,9 +49,11 @@ export default function App() {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Statuses</SelectLabel>
-              <SelectItem value={"none"}>All</SelectItem>
+              <SelectItem value={"all"}>All</SelectItem>
               {Object.values(Status).map((v) => (
-                <SelectItem value={v}>{v}</SelectItem>
+                <SelectItem key={v} value={v}>
+                  {v}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
@@ -55,9 +65,11 @@ export default function App() {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Key types</SelectLabel>
-              <SelectItem value={"none"}>All</SelectItem>
+              <SelectItem value={"all"}>All</SelectItem>
               {Object.values(Key).map((v) => (
-                <SelectItem value={v}>{v}</SelectItem>
+                <SelectItem key={v} value={v}>
+                  {v}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
@@ -66,57 +78,65 @@ export default function App() {
       <div className="flex flex-col p-4">
         {executors
           .filter((v) =>
-            os !== "none" ? v.platforms.includes(os as Platform) : true,
+            os !== "all" ? v.platforms.includes(os as Platform) : true,
           )
-          .filter((v) => (status !== "none" ? v.status === status : true))
-          .filter((v) => (key !== "none" ? v.key === key : true))
+          .filter((v) => (status !== "all" ? v.status === status : true))
+          .filter((v) => (key !== "all" ? v.key === key : true))
           .sort((a, b) => a.name.charCodeAt(0) - b.name.charCodeAt(0))
           .map((executor) => (
-            <a href={executor.website} target="_blank">
-              <div
-                className={cn(
-                  "m-5 flex flex-col rounded-lg px-10 py-5",
-                  executor.status === Status.PATCHED
-                    ? "bg-red-600"
-                    : "bg-green-400",
-                )}
-              >
-                <div className="flex items-center">
-                  <img
-                    src={executor.icon}
-                    width={64}
-                    height={64}
-                    className="rounded-full"
-                  />
-                  <h1 className="ml-1 text-3xl font-bold">{executor.name}</h1>
-                </div>
-                <Field name="Platforms:">
-                  <div>
-                    {executor.platforms.map((v) => (
-                      <PlatformText platform={v} />
-                    ))}
-                  </div>
-                </Field>
-                <Field name="Status:">{executor.status}</Field>
-                <Field name="Key:">{executor.key}</Field>
-                {executor.website ? (
-                  <Field name="Website:" link>
-                    {executor.website}
-                  </Field>
-                ) : (
-                  ""
-                )}
-                {executor.discord ? (
-                  <Field name="Discord:" link>
-                    {executor.discord}
-                  </Field>
-                ) : (
-                  ""
-                )}
+            <div
+              key={executor.name}
+              className={cn(
+                "m-5 flex flex-col rounded-lg px-10 py-5",
+                executor.status === Status.PATCHED
+                  ? "bg-red-600"
+                  : "bg-green-400",
+              )}
+            >
+              <div className="flex items-center">
+                <img
+                  src={executor.icon}
+                  width={64}
+                  height={64}
+                  className="rounded-full"
+                />
+                <h1 className="ml-1 text-3xl font-bold">{executor.name}</h1>
               </div>
-            </a>
+              <Field name="Platforms:">
+                <div>
+                  {executor.platforms.map((v) => (
+                    <PlatformText platform={v} key={v} />
+                  ))}
+                </div>
+              </Field>
+              <Field name="Status:">{executor.status}</Field>
+              <Field name="Key:">{executor.key}</Field>
+              {executor.website ? (
+                <Field name="Website:" link>
+                  {executor.website}
+                </Field>
+              ) : (
+                ""
+              )}
+              {executor.discord ? (
+                <Field name="Discord:" link>
+                  {executor.discord}
+                </Field>
+              ) : (
+                ""
+              )}
+            </div>
           ))}
       </div>
+      <footer className="flex justify-center bg-sky-600 p-10">
+        Made by{" "}
+        <a
+          href="https://discopika.tk"
+          className="hol pl-1 text-sky-400 transition-colors hover:text-sky-500"
+        >
+          mallusrgreat
+        </a>
+      </footer>
     </main>
   );
 }
@@ -135,13 +155,15 @@ function Field({
       {link && typeof children === "string" ? (
         <a
           href={children}
-          className="text-sky-500 transition-colors hover:text-sky-600"
+          className="text-sky-800 transition-colors hover:text-sky-900"
           target="_blank"
         >
           {children}
         </a>
-      ) : (
+      ) : typeof children === "string" ? (
         <p>{children}</p>
+      ) : (
+        children
       )}
     </div>
   );
