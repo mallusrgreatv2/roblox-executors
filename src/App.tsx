@@ -29,7 +29,7 @@ import {
   SelectValue,
 } from "./components/select";
 import { Button } from "./components/button";
-import { ArrowLeftRight } from "lucide-react";
+import { ArrowLeftRight, GithubIcon } from "lucide-react";
 
 export default function App() {
   const [reversed, setReversed] = useQueryParam(
@@ -58,8 +58,17 @@ export default function App() {
 
   return (
     <main className="bg-[#181a1b] text-white">
-      <div className="bg-sky-600 p-10 text-center">
+      <div className="flex bg-sky-600 p-10 text-center">
         <h1 className="text-3xl font-bold">Roblox Executors List</h1>
+        <a
+          href="https://github.com/mallusrgreatv2/roblox-executors"
+          target="_blank"
+          className="ml-auto"
+        >
+          <Button variant="secondary">
+            <GithubIcon />
+          </Button>
+        </a>
       </div>
       <div className="ml-14 flex justify-center p-5 pb-0 md:ml-6">
         <Select value={sort} onValueChange={setSort}>
