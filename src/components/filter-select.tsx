@@ -19,7 +19,7 @@ export default function FilterSelect(options: {
 }) {
   return (
     <Select onValueChange={options.onValueChange} value={options.value}>
-      <SelectTrigger className="mx-3 w-[180px] bg-[#181a1b]">
+      <SelectTrigger className="m-3 my-1 w-[180px] self-center bg-[#181a1b]">
         <SelectValue placeholder={options.placeholder} />
       </SelectTrigger>
       <SelectContent className="bg-[#181a1b] text-white">

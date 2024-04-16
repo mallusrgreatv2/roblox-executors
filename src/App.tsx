@@ -61,7 +61,7 @@ export default function App() {
       <div className="bg-sky-600 p-10 text-center">
         <h1 className="text-3xl font-bold">Roblox Executors List</h1>
       </div>
-      <div className="flex justify-center pt-10">
+      <div className="ml-14 flex justify-center p-5 pb-0 md:ml-6">
         <Select value={sort} onValueChange={setSort}>
           <SelectTrigger className="mx-3 w-[180px] bg-[#181a1b]">
             <SelectValue placeholder="Sort by" />
@@ -81,7 +81,7 @@ export default function App() {
           <ArrowLeftRight />
         </Button>
       </div>
-      <div className="flex justify-center p-5 pb-0">
+      <div className="flex flex-col justify-center p-5 pb-0 md:flex-row">
         <FilterSelect
           value={os}
           onValueChange={setOS}
@@ -138,7 +138,7 @@ export default function App() {
         Made by{" "}
         <a
           href="https://discopika.tk"
-          className="hol pl-1 text-sky-600 transition-colors hover:text-sky-500"
+          className="hol pl-1 font-semibold text-blue-800 transition-colors hover:text-blue-900"
         >
           mallusrgreat
         </a>
