@@ -57,7 +57,7 @@ export default function App() {
   });
 
   return (
-    <main className="bg-[#181a1b] text-white">
+    <main className="text-white">
       <div className="flex bg-sky-600 p-10 text-center">
         <h1 className="text-3xl font-bold">Roblox Executors List</h1>
         <a
