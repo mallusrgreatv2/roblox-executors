@@ -1,63 +1,13 @@
-export enum Platform {
-  WINDOWS = "windows",
-  ANDROID = "android",
-  IOS = "ios",
-}
-export function PlatformReadable(platform: Platform) {
-  switch (platform) {
-    case Platform.ANDROID:
-      return "Android";
-    case Platform.IOS:
-      return "iOS";
-    case Platform.WINDOWS:
-    default:
-      return "Windows";
-  }
-}
-export enum Status {
-  PATCHED = "patched",
-  WORKING = "working",
-}
-export const StatusReadable = (status: Status) =>
-  status === Status.PATCHED ? "✖️ Patched" : "✅ Working";
+import { Detected, Executor, Key, Platform, PriceType, Status } from "./types";
 
-export enum Price {
-  FREE = "free",
-  PAID = "paid",
-  FREEMIUM = "freemium",
-}
-export function PriceReadable(price: Price) {
-  switch (price) {
-    case Price.PAID:
-      return "💵 Paid";
-    case "freemium":
-      return "☯️ Freemium";
-    case Price.FREE:
-    default:
-      return "🆓 Free";
-  }
-}
-export enum Key {
-  NOKEY = "nokey",
-  KEY = "keylocked",
-}
-export const KeyReadable = (key: Key) =>
-  key === Key.NOKEY ? "🔓 No Key" : "🔐 Keylocked";
-export const executors: {
-  name: string;
-  platforms: Platform[];
-  status: Status;
-  price: Price;
-  key: Key;
-  website?: string;
-  discord?: string;
-  icon: string;
-}[] = [
+export const executors: Executor[] = [
   {
     name: "Wave",
     platforms: [Platform.WINDOWS],
     status: Status.PATCHED,
-    price: Price.FREE,
+    priceType: PriceType.FREEMIUM,
+    price: null,
+    detected: Detected.PARTIAL,
     key: Key.NOKEY,
     website: "https://getwave.gg",
     discord: "https://discord.gg/getwave",
@@ -67,7 +17,9 @@ export const executors: {
     name: "Krampus",
     platforms: [Platform.WINDOWS],
     status: Status.WORKING,
-    price: Price.PAID,
+    priceType: PriceType.PAID,
+    price: 7.98,
+    detected: Detected.NO,
     key: Key.NOKEY,
     website: "https://krampus.gg",
     discord: "https://discord.gg/krampus",
@@ -77,7 +29,9 @@ export const executors: {
     name: "Codex",
     platforms: [Platform.ANDROID, Platform.IOS],
     status: Status.WORKING,
-    price: Price.FREE,
+    priceType: PriceType.FREEMIUM,
+    price: 4.98,
+    detected: Detected.NO,
     key: Key.KEY,
     website: "https://codex.lol",
     discord: "https://discord.gg/robloxexploits",
@@ -87,10 +41,50 @@ export const executors: {
     name: "Arceus X",
     platforms: [Platform.ANDROID, Platform.IOS],
     status: Status.WORKING,
-    price: Price.FREE,
+    priceType: PriceType.FREEMIUM,
+    price: 0.99,
+    detected: Detected.NO,
     key: Key.KEY,
     website: "https://spdmteam.com",
     discord: "https://discord.gg/arceus",
     icon: "/executors/arceus.png",
   },
 ];
+export function filterAndSortExecutors(
+  executors: Executor[],
+  {
+    os,
+    status,
+    detected,
+    key,
+    price,
+    sort,
+  }: {
+    os: string;
+    status: string;
+    detected: string;
+    key: string;
+    price: string;
+    sort: string;
+  },
+) {
+  return executors
+    .filter((executor) =>
+      !os || os !== "all" ? executor.platforms.includes(os as Platform) : true,
+    )
+    .filter((executor) =>
+      !status || status !== "all" ? executor.status === status : true,
+    )
+    .filter((executor) =>
+      !detected || detected !== "all" ? executor.detected === detected : true,
+    )
+    .filter((executor) => (!key || key !== "all" ? executor.key === key : true))
+    .filter((executor) =>
+      !price || price !== "all" ? executor.priceType === price : true,
+    )
+    .sort((a, b) => {
+      if (sort === "name") return a.name.charCodeAt(0) - b.name.charCodeAt(0);
+      if (sort === "price") return (b.price || 0) - (a.price || 0);
+      return 0;
+    });
+}
