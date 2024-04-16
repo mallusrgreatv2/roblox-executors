@@ -30,6 +30,7 @@ import {
 } from "./components/select";
 import { Button } from "./components/button";
 import { ArrowLeftRight, GithubIcon } from "lucide-react";
+import { useEffect } from "react";
 
 export default function App() {
   const [reversed, setReversed] = useQueryParam(
@@ -46,7 +47,26 @@ export default function App() {
   const [detected, setDetected] = useQueryParam("detected", stringParam);
   const [key, setKey] = useQueryParam("key", stringParam);
   const [price, setPrice] = useQueryParam("price", stringParam);
-
+  useEffect(() => {
+    if (sort !== "name" && !["name", "price"].includes(sort)) setSort("name");
+    if (os !== "all" && !Object.values(Platform).includes(os as Platform))
+      setOS("all");
+    if (status !== "all" && !Object.values(Status).includes(status as Status))
+      setStatus("all");
+    if (
+      detected !== "all" &&
+      !Object.values(Detected).includes(detected as Detected)
+    )
+      setDetected("all");
+    if (key !== "all" && !Object.values(Key).includes(key as Key))
+      setKey("all");
+    if (
+      price !== "all" &&
+      !Object.values(PriceType).includes(price as PriceType)
+    )
+      setPrice("all");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sort, os, status, detected, key, price]);
   const fsExecutors = filterAndSortExecutors(executors, {
     os,
     key,
@@ -139,9 +159,15 @@ export default function App() {
         />
       </div>
       <div className="flex flex-col p-4">
-        {(reversed ? fsExecutors.reverse() : fsExecutors).map((executor) => (
-          <ExecutorData executor={executor} />
-        ))}
+        {fsExecutors.length ? (
+          (reversed ? fsExecutors.reverse() : fsExecutors).map((executor) => (
+            <ExecutorData executor={executor} />
+          ))
+        ) : (
+          <p className="p-5 text-center text-lg font-semibold">
+            No executors match the filter!
+          </p>
+        )}
       </div>
       <footer className="absolute w-full bg-sky-600 p-10 text-center">
         Made by{" "}
