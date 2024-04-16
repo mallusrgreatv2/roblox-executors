@@ -37,6 +37,22 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
       </Field>
       <Field name="Status:">{StatusReadable(executor.status)}</Field>
       <Field name="Detected:">{DetectedReadable(executor.detected)}</Field>
+      {executor.warning ? (
+        <Field name="⚠️ Use with causion!">
+          <p>
+            More info:{" "}
+            <a
+              target="_blank"
+              href={executor.warning}
+              className="text-sky-300 hover:text-sky-400"
+            >
+              {executor.warning}
+            </a>
+          </p>
+        </Field>
+      ) : (
+        ""
+      )}
       <Field name="Key:">{KeyReadable(executor.key)}</Field>
       <Field name="Price:">
         <p>
