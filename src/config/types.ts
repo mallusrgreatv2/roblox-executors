@@ -29,6 +29,7 @@ export enum Platform {
   WINDOWS = "windows",
   ANDROID = "android",
   IOS = "ios",
+  MACOS = "macos",
 }
 export enum Status {
   PATCHED = "patched",
@@ -91,6 +92,8 @@ export function PlatformReadable(platform: Platform) {
       return "Android";
     case Platform.IOS:
       return "iOS";
+    case Platform.MACOS:
+      return "MacOS";
     case Platform.WINDOWS:
     default:
       return "Windows";
