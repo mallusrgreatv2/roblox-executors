@@ -2,6 +2,17 @@ import { Detected, Executor, Key, Platform, PriceType, Status } from "./types";
 
 export const executors: Executor[] = [
   {
+    name: "Hydrogen",
+    platforms: [Platform.ANDROID, Platform.MACOS],
+    status: Status.WORKING,
+    priceType: PriceType.FREE,
+    detected: Detected.NO,
+    key: Key.KEY,
+    icon: "/executors/hydrogen.png",
+    discord: "https://discord.gg/hydrogen",
+    website: "https://hydrogen.sh",
+  },
+  {
     name: "Wave",
     platforms: [Platform.WINDOWS],
     status: Status.PATCHED,
