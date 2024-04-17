@@ -8,7 +8,7 @@ export const executors: Executor[] = [
     priceType: PriceType.PAID,
     detected: Detected.NO,
     key: Key.NOKEY,
-    icon: "",
+    icon: "/executors/macsploit.png",
     discord: "https://discord.gg/macsploit",
     price: 4.99,
     website: "https://abyssdigital.xyz",
