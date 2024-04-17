@@ -9,8 +9,10 @@ export interface Executor {
   priceType: PriceType;
   /** The detection status of the executor, whether it is detected or undetected */
   detected: Detected;
-  /** A link that explains why this executor must be used with caution, if applicable. */
+  /** A sentence that explains why this executor must be used with caution, if applicable */
   warning?: string;
+  /** A link that elaborates on why this executor must be used with caution, if applicable. */
+  warningLink?: string;
   /** Whether the executor is locked with a key which we have to get by watching ads */
   key: Key;
   /** The lowest price in USD in the subscription model of the executor (or its premium version), if applicable.

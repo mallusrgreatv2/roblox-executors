@@ -1,10 +1,12 @@
+import { ReactNode } from "react";
+
 export default function Field({
   name,
   children,
   link = false,
 }: {
   name: string;
-  children: JSX.Element | string;
+  children: ReactNode;
   link?: boolean;
 }) {
   return (

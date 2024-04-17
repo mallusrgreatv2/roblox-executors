@@ -29,26 +29,29 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
         <h1 className="ml-1 text-3xl font-bold">{executor.name}</h1>
       </div>
       <Field name="Platforms:">
-        <div>
-          {executor.platforms.map((v) => (
-            <PlatformText platform={v} key={v} />
-          ))}
-        </div>
+        {executor.platforms.map((v) => (
+          <PlatformText platform={v} key={v} />
+        ))}
       </Field>
       <Field name="Status:">{StatusReadable(executor.status)}</Field>
       <Field name="Detected:">{DetectedReadable(executor.detected)}</Field>
-      {executor.warning ? (
-        <Field name="⚠️ Use with causion!">
-          <p>
-            More info:{" "}
-            <a
-              target="_blank"
-              href={executor.warning}
-              className="text-sky-300 hover:text-sky-400"
-            >
-              {executor.warning}
-            </a>
-          </p>
+      {executor.warning || executor.warningLink ? (
+        <Field name="⚠️ Use with caution!">
+          {executor.warning ? <p>{executor.warning}</p> : ""}
+          {executor.warningLink ? (
+            <p>
+              More info:{" "}
+              <a
+                target="_blank"
+                href={executor.warningLink}
+                className="text-sky-300 hover:text-sky-400"
+              >
+                {executor.warningLink}
+              </a>
+            </p>
+          ) : (
+            ""
+          )}
         </Field>
       ) : (
         ""
