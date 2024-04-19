@@ -66,14 +66,26 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
         </p>
       </Field>
       {executor.website ? (
-        <Field name="Website:" link>
+        <Field
+          name="Website:"
+          link
+          linkClassName={
+            badExecutor(executor) ? "text-sky-600 hover:text-sky-500" : ""
+          }
+        >
           {executor.website}
         </Field>
       ) : (
         ""
       )}
       {executor.discord ? (
-        <Field name="Discord:" link>
+        <Field
+          name="Discord:"
+          link
+          linkClassName={
+            badExecutor(executor) ? "text-sky-600 hover:text-sky-500" : ""
+          }
+        >
           {executor.discord}
         </Field>
       ) : (
@@ -83,13 +95,28 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
   );
 }
 function executorColor(executor: Executor) {
-  if (executor.status === Status.PATCHED) return "bg-red-500";
-  if (executor.status === Status.PARTIAL) return "bg-red-200";
+  if (executor.status === Status.PATCHED) return "bg-red-500 text-purple-800";
+  if (executor.status === Status.PARTIAL) return "bg-red-200 text-purple-800";
 
-  if (executor.detected === Detected.YES) return "bg-yellow-400";
-  if (executor.detected === Detected.PARTIAL) return "bg-yellow-200";
+  if (executor.detected === Detected.YES)
+    return "bg-yellow-400 text-purple-800";
+  if (executor.detected === Detected.PARTIAL)
+    return "bg-yellow-200 text-purple-800";
 
-  if (executor.warning || executor.warningLink) return "bg-orange-300";
+  if (executor.warning || executor.warningLink)
+    return "bg-orange-300 text-purple-800";
 
   return "bg-green-600";
+}
+function badExecutor(executor: Executor) {
+  if (
+    executor.status === Status.PATCHED ||
+    executor.status === Status.PARTIAL ||
+    executor.detected === Detected.YES ||
+    executor.detected === Detected.PARTIAL ||
+    executor.warning ||
+    executor.warningLink
+  )
+    return true;
+  return false;
 }
