@@ -120,6 +120,34 @@ export function filterAndSortExecutors(
     .sort((a, b) => {
       if (sort === "name") return a.name.charCodeAt(0) - b.name.charCodeAt(0);
       if (sort === "price") return (b.price || 0) - (a.price || 0);
+      const statusPriority = {
+        [Status.WORKING]: 0,
+        [Status.PARTIAL]: 1,
+        [Status.PATCHED]: 2,
+      };
+      const detectedPriority = {
+        [Detected.NO]: 0,
+        [Detected.PARTIAL]: 1,
+        [Detected.YES]: 2,
+      };
+      if (sort === "working") {
+        return statusPriority[a.status] - statusPriority[b.status];
+      }
+      if (sort === "undetected") {
+        return detectedPriority[a.detected] - detectedPriority[b.detected];
+      }
+      if (sort === "working-undetected") {
+        const compareStatus =
+          statusPriority[a.status] - statusPriority[b.status];
+        const compareDetected =
+          detectedPriority[a.detected] - detectedPriority[b.detected];
+
+        if (compareStatus !== 0) {
+          return compareStatus;
+        } else {
+          return compareDetected;
+        }
+      }
       return 0;
     });
 }

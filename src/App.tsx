@@ -48,7 +48,17 @@ export default function App() {
   const [key, setKey] = useQueryParam("key", stringParam);
   const [price, setPrice] = useQueryParam("price", stringParam);
   useEffect(() => {
-    if (sort !== "name" && !["name", "price"].includes(sort)) setSort("name");
+    if (
+      sort !== "name" &&
+      ![
+        "name",
+        "price",
+        "working",
+        "undetected",
+        "working-undetected",
+      ].includes(sort)
+    )
+      setSort("name");
     if (os !== "all" && !Object.values(Platform).includes(os as Platform))
       setOS("all");
     if (status !== "all" && !Object.values(Status).includes(status as Status))
@@ -100,6 +110,11 @@ export default function App() {
               <SelectLabel>Sort types</SelectLabel>
               <SelectItem value="name">Sort by name</SelectItem>
               <SelectItem value="price">Sort by price</SelectItem>
+              <SelectItem value="working">Sort by working</SelectItem>
+              <SelectItem value="undetected">Sort by undetected</SelectItem>
+              <SelectItem value="working-undetected">
+                Sort by working & undetected
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
