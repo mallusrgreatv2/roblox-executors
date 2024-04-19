@@ -70,6 +70,9 @@ export const executors: Executor[] = [
     key: Key.KEY,
     website: "https://codex.lol",
     discord: "https://discord.gg/robloxexploits",
+    warning: "Uses Arceus X's API. So Codex is basically reskinned Arceus X.",
+    warningLink:
+      "https://raw.githubusercontent.com/FurkyYT/stuff/main/mainAndroid",
     icon: "/executors/codex.png",
   },
   {
