@@ -44,7 +44,7 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
               <a
                 target="_blank"
                 href={executor.warningLink}
-                className="text-sky-300 hover:text-sky-400"
+                className={badExecutor(executor) ? "text-sky-600 hover:text-sky-500" : "text-sky-300 hover:text-sky-400"}
               >
                 {executor.warningLink}
               </a>
