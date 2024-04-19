@@ -1,4 +1,4 @@
-import { Executor, PriceType, formatPrice } from "../config/types";
+import { Detected, Executor, PriceType, formatPrice } from "../config/types";
 import {
   DetectedReadable,
   KeyReadable,
@@ -16,7 +16,7 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
       key={executor.name}
       className={cn(
         "m-5 flex flex-col rounded-lg px-10 py-5",
-        executor.status === Status.PATCHED ? "bg-red-500" : "bg-green-600",
+        executorColor(executor),
       )}
     >
       <div className="flex items-center">
@@ -81,4 +81,15 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
       )}
     </div>
   );
+}
+function executorColor(executor: Executor) {
+  if (executor.status === Status.PATCHED) return "bg-red-500";
+  if (executor.status === Status.PARTIAL) return "bg-red-200";
+
+  if (executor.detected === Detected.YES) return "bg-yellow-400";
+  if (executor.detected === Detected.PARTIAL) return "bg-yellow-200";
+
+  if (executor.warning || executor.warningLink) return "bg-orange-300";
+
+  return "bg-green-600";
 }

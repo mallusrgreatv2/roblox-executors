@@ -17,7 +17,7 @@ export const executors: Executor[] = [
     platforms: [Platform.MACOS],
     status: Status.WORKING,
     priceType: PriceType.PAID,
-    detected: Detected.NO,
+    detected: Detected.YES,
     key: Key.NOKEY,
     icon: "/executors/macsploit.png",
     discord: "https://discord.gg/macsploit",
