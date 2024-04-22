@@ -14,10 +14,7 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
   return (
     <div
       key={executor.name}
-      className={cn(
-        "m-5 flex flex-col rounded-lg px-10 py-5",
-        executorColor(executor),
-      )}
+      className="m-5 flex flex-col rounded-lg bg-green-600 px-10 py-5"
     >
       <div className="flex items-center">
         <img
@@ -26,7 +23,9 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
           height={64}
           className="rounded-full"
         />
-        <h1 className="ml-1 text-3xl font-bold">{executor.name}</h1>
+        <h1 className={cn("ml-1 text-3xl font-bold", executorColor(executor))}>
+          {executor.name}
+        </h1>
       </div>
       <Field name="Platforms:">
         {executor.platforms.map((v) => (
@@ -44,7 +43,7 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
               <a
                 target="_blank"
                 href={executor.warningLink}
-                className={badExecutor(executor) ? "text-sky-600 hover:text-sky-500" : "text-sky-300 hover:text-sky-400"}
+                className="text-sky-300 hover:text-sky-400"
               >
                 {executor.warningLink}
               </a>
@@ -69,9 +68,7 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
         <Field
           name="Website:"
           link
-          linkClassName={
-            badExecutor(executor) ? "text-sky-600 hover:text-sky-500" : ""
-          }
+          linkClassName="text-sky-300 hover:text-sky-400"
         >
           {executor.website}
         </Field>
@@ -82,9 +79,7 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
         <Field
           name="Discord:"
           link
-          linkClassName={
-            badExecutor(executor) ? "text-sky-600 hover:text-sky-500" : ""
-          }
+          linkClassName="text-sky-300 hover:text-sky-400"
         >
           {executor.discord}
         </Field>
@@ -95,28 +90,13 @@ export default function ExecutorData({ executor }: { executor: Executor }) {
   );
 }
 function executorColor(executor: Executor) {
-  if (executor.status === Status.PATCHED) return "bg-red-500 text-purple-800";
-  if (executor.status === Status.PARTIAL) return "bg-red-200 text-purple-800";
+  if (executor.status === Status.PATCHED) return "text-red-500";
+  if (executor.status === Status.PARTIAL) return "text-red-200";
 
-  if (executor.detected === Detected.YES)
-    return "bg-yellow-400 text-purple-800";
-  if (executor.detected === Detected.PARTIAL)
-    return "bg-yellow-200 text-purple-800";
+  if (executor.detected === Detected.YES) return "text-yellow-400";
+  if (executor.detected === Detected.PARTIAL) return "text-yellow-200";
 
-  if (executor.warning || executor.warningLink)
-    return "bg-orange-300 text-purple-800";
+  if (executor.warning || executor.warningLink) return "text-[#ffb02e]";
 
-  return "bg-green-600";
-}
-function badExecutor(executor: Executor) {
-  if (
-    executor.status === Status.PATCHED ||
-    executor.status === Status.PARTIAL ||
-    executor.detected === Detected.YES ||
-    executor.detected === Detected.PARTIAL ||
-    executor.warning ||
-    executor.warningLink
-  )
-    return true;
-  return false;
+  return "text-white";
 }
