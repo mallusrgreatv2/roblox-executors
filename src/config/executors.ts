@@ -2,6 +2,16 @@ import { Detected, Executor, Key, Platform, PriceType, Status } from "./types";
 
 export const executors: Executor[] = [
   {
+    name: "Solara",
+    platforms: [Platform.WINDOWS],
+    status: Status.WORKING,
+    priceType: PriceType.FREE,
+    detected: Detected.YES,
+    key: Key.NOKEY,
+    icon: "/executors/solara.png",
+    discord: "https://discord.gg/getsolara",
+  },
+  {
     name: "Valyse",
     platforms: [Platform.ANDROID],
     status: Status.WORKING,
