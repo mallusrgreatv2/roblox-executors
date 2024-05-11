@@ -59,18 +59,6 @@ export const executors: Executor[] = [
     icon: "/executors/wave.png",
   },
   {
-    name: "Krampus",
-    platforms: [Platform.WINDOWS],
-    status: Status.WORKING,
-    priceType: PriceType.PAID,
-    price: 7.98,
-    detected: Detected.NO,
-    key: Key.NOKEY,
-    website: "https://krampus.gg",
-    discord: "https://discord.gg/krampus",
-    icon: "/executors/krampus.png",
-  },
-  {
     name: "Arceus X",
     platforms: [Platform.ANDROID, Platform.IOS],
     status: Status.WORKING,
