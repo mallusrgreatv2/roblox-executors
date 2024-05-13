@@ -3,6 +3,17 @@ import { Detected, Executor, Key, Platform, PriceType, Status } from "./types";
 
 export const executors: Executor[] = [
   {
+    name: "Delta",
+    platforms: [Platform.ANDROID],
+    status: Status.WORKING,
+    priceType: PriceType.FREE,
+    detected: Detected.NO,
+    key: Key.KEY,
+    icon: "/executors/delta.png",
+    discord: "https://discord.gg/deltaex",
+    website: "https://deltaexploits.net",
+  },
+  {
     name: "Celery",
     platforms: [Platform.WINDOWS],
     status: Status.WORKING,
