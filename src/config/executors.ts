@@ -1,3 +1,4 @@
+import Fuse from "fuse.js";
 import { Detected, Executor, Key, Platform, PriceType, Status } from "./types";
 
 export const executors: Executor[] = [
@@ -91,6 +92,7 @@ export function filterAndSortExecutors(
     key,
     price,
     sort,
+    search,
   }: {
     os: string;
     status: string;
@@ -98,9 +100,10 @@ export function filterAndSortExecutors(
     key: string;
     price: string;
     sort: string;
+    search: string;
   },
 ) {
-  return executors
+  const filtered = executors
     .filter((executor) =>
       !os || os !== "all" ? executor.platforms.includes(os as Platform) : true,
     )
@@ -147,4 +150,19 @@ export function filterAndSortExecutors(
       }
       return 0;
     });
+  if (search) {
+    const fuse = new Fuse(executors, {
+      keys: [
+        "name",
+        "platforms",
+        "status",
+        "priceType",
+        "detected",
+        "key",
+        "discord",
+      ],
+    });
+    return fuse.search(search).map((v) => v.item);
+  }
+  return filtered;
 }

@@ -31,6 +31,7 @@ import {
 import { Button } from "./components/button";
 import { ArrowLeftRight, GithubIcon } from "lucide-react";
 import { useEffect } from "react";
+import { Input } from "./components/input";
 
 export default function App() {
   const [reversed, setReversed] = useQueryParam(
@@ -47,6 +48,10 @@ export default function App() {
   const [detected, setDetected] = useQueryParam("detected", stringParam);
   const [key, setKey] = useQueryParam("key", stringParam);
   const [price, setPrice] = useQueryParam("price", stringParam);
+  const [search, setSearch] = useQueryParam(
+    "search",
+    withDefault(StringParam, ""),
+  );
   useEffect(() => {
     if (
       sort !== "name" &&
@@ -84,6 +89,7 @@ export default function App() {
     sort,
     price,
     status,
+    search,
   });
 
   return (
@@ -99,6 +105,14 @@ export default function App() {
             <GithubIcon />
           </Button>
         </a>
+      </div>
+      <div className="flex justify-center align-middle">
+        <Input
+          placeholder="Search for executors..."
+          className="m-10 mb-5 w-[50%] border-white bg-[#181a1b] py-5 outline-none"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
       <div className="ml-14 flex justify-center p-5 pb-0 md:ml-6">
         <Select value={sort} onValueChange={setSort}>
