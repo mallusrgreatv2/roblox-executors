@@ -14,16 +14,6 @@ export const executors: Executor[] = [
     website: "https://deltaexploits.net",
   },
   {
-    name: "Celery",
-    platforms: [Platform.WINDOWS],
-    status: Status.WORKING,
-    priceType: PriceType.FREE,
-    detected: Detected.YES,
-    key: Key.NOKEY,
-    icon: "/executors/celery.png",
-    discord: "https://discord.gg/celery",
-  },
-  {
     name: "Solara",
     platforms: [Platform.WINDOWS],
     status: Status.WORKING,
@@ -31,7 +21,7 @@ export const executors: Executor[] = [
     detected: Detected.YES,
     key: Key.NOKEY,
     icon: "/executors/solara.png",
-    discord: "https://discord.gg/getsolara",
+    discord: "https://discord.gg/realsolara",
   },
   {
     name: "Valyse",
