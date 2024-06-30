@@ -56,7 +56,7 @@ export const executors: Executor[] = [
     icon: "/executors/hydrogen.png",
     discord: "https://discord.gg/hydrogen",
     website: "https://hydrogen.sh",
-    warning: "Android version doesn't work, but the MacOS version works.",
+    warning: "Android version works, but the MacOS version doesn't.",
   },
   {
     name: "Wave",
