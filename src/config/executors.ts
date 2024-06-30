@@ -61,7 +61,7 @@ export const executors: Executor[] = [
   {
     name: "Wave",
     platforms: [Platform.WINDOWS],
-    status: Status.PATCHED,
+    status: Status.WORKING,
     priceType: PriceType.FREEMIUM,
     price: null,
     detected: Detected.PARTIAL,
