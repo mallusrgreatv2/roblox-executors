@@ -83,6 +83,16 @@ export const executors: Executor[] = [
     discord: "https://discord.gg/arceus",
     icon: "/executors/arceus.png",
   },
+  {
+    name: "Celery",
+    platforms: [Platform.WINDOWS],
+    status: Status.WORKING,
+    priceType: PriceType.FREE,
+    detected: Detected.PARTIAL,
+    key: Key.NOKEY,
+    discord: "https://discord.gg/celery",
+    icon: "/executors/celery.png",
+  },
 ];
 export function filterAndSortExecutors(
   executors: Executor[],
